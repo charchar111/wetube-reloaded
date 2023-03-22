@@ -2,13 +2,12 @@
   "name": "wetube",
   "version": "1.0.0",
   "description": "the best way to watch video",
-  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/charchar111/wetube-reloaded.git"
   },
   "scripts": {
-    "dev": "nodemon --exec babel-node index.js"
+    "dev": "nodemon --exec babel-node src/server.js"
   },
   "author": "charchar",
   "license": "MIT",
