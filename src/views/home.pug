@@ -1,4 +1,5 @@
-extends base.pug
+extends base
+include mixins/video
 
 block content
     h2 welcome here you will see trending video
@@ -6,3 +7,8 @@ block content
         input(placeholder="write")
 
         button login
+
+    each items in videos
+      +video(items) 
+    //- else
+    //-    li sorry nothing found
