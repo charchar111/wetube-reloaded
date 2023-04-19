@@ -1,12 +1,16 @@
-export const trending = (req, res) => res.send("this is homepage");
+const fakeUser = {
+  username: "charchar",
+  loggedIn: false,
+};
+
+export const trending = (req, res) => {
+  const videos = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  return res.render("home", { pageTitle: "home", fakeUser: fakeUser, videos });
+};
 export const see = (req, res) => {
-  //   console.log(typeof Object.values(req.params)[0]);
-  console.log(req.params);
-  return res.send(`watch videos #${req.params.id}`);
+  return res.render("watch", { videoIndex: req.params.id });
 };
-export const edit = (req, res) => {
-  res.send("video edit");
-};
+export const edit = (req, res) => res.render("edit");
 
 export const search = (req, res) => res.send("search");
 export const deleteVideo = (req, res) => {
