@@ -1,4 +1,9 @@
 extends base.pug
 
 block content 
-    h1 watch video #{videoIndex}
+    h3 #{video.views} #{video.views ===1 ? "view" : "views"}
+    //- if video.views !==1
+    //-     h3  #{video.views} views
+    //- else if video.views ==1
+    //-     h3  #{video.views} view
+    a(href=`${video.id}/edit`) Edit Video ༼ つ ◕_◕ ༽つ

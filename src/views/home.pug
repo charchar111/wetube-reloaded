@@ -1,6 +1,13 @@
 extends base
 include mixins/video
 
+block upload 
+       nav 
+                ul 
+                    li 
+                        a(href="/videos/upload") Upload Video
+
+
 block content
     h2 welcome here you will see trending video
     form(action="") 
@@ -8,7 +15,7 @@ block content
 
         button login
 
-    each items in videos
-      +video(items) 
+    each video in videos
+      +video(video) 
     //- else
     //-    li sorry nothing found
