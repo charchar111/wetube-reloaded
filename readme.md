@@ -15,5 +15,5 @@
 
 /videos/:id => 비디오마다 id 부여, see video
 /videos/:id/edit
-/videos/upload
+/videos/:id/upload
 /videos/:id/delete

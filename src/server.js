@@ -16,4 +16,5 @@ app.use("/", globalRouter);
 app.use("/videos", videoRouter);
 app.use("/users", userRouter);
 
+console.log("server");
 export default app;
