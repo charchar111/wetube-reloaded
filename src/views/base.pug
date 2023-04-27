@@ -6,8 +6,15 @@ html(lang="ko")
     body
         header
             h1=pageTitle
-            block upload
-         
+            nav 
+                ul 
+                    li 
+                        a(href="/videos/upload") Upload Video
+                    li 
+                        a(href="/") back to home
+                 
+                    
+                        
         main 
             block content
             include partials/footer
