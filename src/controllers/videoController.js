@@ -1,11 +1,9 @@
-import { render } from "pug";
 import Video from "../models/Video";
-import video from "../models/Video";
 
 export const home = async (req, res) => {
   try {
-    const videos = await Video.find({});
-
+    const videos = await Video.find({}).sort({ createdAt: "desc" });
+    console.log(videos);
     return res.render("home", { pageTitle: "home", videos });
   } catch (error) {
     console.log("server error: ", error);
@@ -16,6 +14,7 @@ export const home = async (req, res) => {
 export const watch = async (req, res) => {
   try {
     const { id } = req.params;
+
     const video = await Video.findById(id);
     if (video) {
       return res.render("watch", {
@@ -64,9 +63,7 @@ export const postEdit = async (req, res) => {
     const video = await Video.findByIdAndUpdate(id, {
       title,
       description,
-      hashtags: hashtags
-        .split(",")
-        .map((word) => (word.startsWith("#") ? word : `#${word}`)),
+      hashtags: Video.formatHashtags(hashtags),
     });
     console.log(video);
 
@@ -74,14 +71,27 @@ export const postEdit = async (req, res) => {
   }
 };
 
-export const search = (req, res) => res.send("search");
+export const search = async (req, res) => {
+  const { keyword } = req.query;
+  let videos = [];
+  if (keyword) {
+    videos = await Video.find({
+      title: {
+        $regex: new RegExp(keyword, "gim"),
+        // $regex: new RegExp(`^${keyword}`, "gim"),
+      },
+    });
+    console.log(videos);
+  }
+
+  res.render("search", { pageTitle: "search", videos });
+};
 export const deleteVideo = async (req, res) => {
   const { id } = req.params;
   console.log(id);
   const deleteVideo = await Video.findByIdAndDelete(id);
   console.log("delete:" + deleteVideo);
-  const video = await Video.find({});
-  console.log(video);
+
   res.redirect("/");
 };
 
@@ -97,7 +107,8 @@ export const postUpload = async (req, res) => {
     await Video.create({
       title,
       description,
-      hashtags: hashtags.split(",").map((word) => `#${word.trim()}`),
+      hashtags: Video.formatHashtags(hashtags),
+      // hashtags: hashtags.split(",").map((word) => `#${word.trim()}`),
     });
 
     return res.redirect("/");
