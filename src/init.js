@@ -1,7 +1,8 @@
 import "./db";
 //몽구스, 몽고 연결/
 
-import video from "./models/Video";
+import "./models/Video";
+import "./models/User";
 import app from "./server";
 
 console.log("init");

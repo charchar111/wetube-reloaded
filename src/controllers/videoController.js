@@ -7,7 +7,7 @@ export const home = async (req, res) => {
     return res.render("home", { pageTitle: "home", videos });
   } catch (error) {
     console.log("server error: ", error);
-    return res.render("serverError", { pageTitle: "error" });
+    return res.status(404).render("serverError", { pageTitle: "error" });
   }
 };
 
@@ -22,13 +22,13 @@ export const watch = async (req, res) => {
         video,
       });
     } else {
-      return res.render("serverError"), { pageTitle: "error" };
+      return res.status(404).render("serverError"), { pageTitle: "error" };
     }
 
     // res.send("hello");
   } catch (error) {
     console.log(error);
-    return res.render("serverError"), { pageTitle: "error" };
+    return res.status(400).render("serverError"), { pageTitle: "error" };
   }
 };
 export const getEdit = async (req, res) => {
@@ -37,7 +37,7 @@ export const getEdit = async (req, res) => {
   const video = await Video.findById(id);
   console.log(video);
   if (!video) {
-    return res.render("serverError"), { pageTitle: "error" };
+    return res.status(400).render("serverError"), { pageTitle: "error" };
   } else {
     return res.render("edit", { pageTitle: `Editing:${video.title}`, video });
   }
@@ -51,7 +51,7 @@ export const postEdit = async (req, res) => {
   console.log(videoCheck);
   // 비디오존재 확인용
   if (!videoCheck) {
-    return res.render("serverError"), { pageTitle: "error" };
+    return res.status(404).render("serverError"), { pageTitle: "error" };
   } else {
     // video.title = title;
     // video.description = description;
@@ -113,6 +113,8 @@ export const postUpload = async (req, res) => {
 
     return res.redirect("/");
   } catch (error) {
-    res.render("upload", { pageTitle: "upload", errorMessage: error });
+    res
+      .status(400)
+      .render("upload", { pageTitle: "upload", errorMessage: error });
   }
 };

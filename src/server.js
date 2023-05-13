@@ -1,6 +1,8 @@
 import express from "express";
 import morgan from "morgan";
-import globalRouter from "./routers/globalRouter";
+import session from "express-session";
+import { localMiddleware } from "./middlewares";
+import rootRouter from "./routers/rootRouter";
 import videoRouter from "./routers/videoRouter";
 import userRouter from "./routers/userRouter";
 
@@ -12,7 +14,30 @@ app.set("view engine", "pug");
 app.set("views", process.cwd() + "/src/views");
 
 app.use(express.urlencoded({ extended: true }));
-app.use("/", globalRouter);
+app.use(
+  session({
+    secret: "hello",
+    resave: true,
+    saveUninitialized: true,
+  })
+);
+// app.use((req, res, next) => {
+//   // console.log(req.headers);
+//   // console.log("-------------------------------------------");
+//   req.sessionStore.all((error, sessions) => {
+//     console.log(sessions);
+//     next();
+//   });
+// });
+app.use(localMiddleware);
+app.get("/add-one", (req, res, next) => {
+  console.log("add-one");
+  req.session.potato += 1;
+  console.log(req.session);
+  return res.send(`${req.session.id} \n ${req.session.potato}`);
+});
+
+app.use("/", rootRouter);
 app.use("/videos", videoRouter);
 app.use("/users", userRouter);
 
