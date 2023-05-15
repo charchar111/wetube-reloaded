@@ -1,5 +1,5 @@
 import User from "../models/User";
-
+import fetch from "node-fetch";
 export const getJoin = (req, res) => {
   res.render("join", { pageTitle: "Join" });
 };
@@ -53,16 +53,41 @@ export const finishGithubLogin = async (req, res) => {
   };
   const params = new URLSearchParams(config).toString();
   const finalUrl = `${baseUrl}?${params}`;
-  const data = await fetch(finalUrl, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-    },
-  });
+  const tokenRequest = await (
+    await fetch(finalUrl, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+      },
+    })
+  ).json();
   //헤더는 리스폰스값을 json으로 받기 위한 설정값. 문서에 헤더설명은x 강의 참조//
 
-  const json = await data.json();
-  console.log(json);
+  //위 아래 동일, //
+  // const data = await fetch(finalUrl, {
+  //   method: "POST",
+  //   headers: {
+  //     Accept: "application/json",
+  //   },
+  // });
+  // //헤더는 리스폰스값을 json으로 받기 위한 설정값. 문서에 헤더설명은x 강의 참조//
+
+  // const json = await data.json();
+  if ("access_token" in tokenRequest) {
+    const { access_token } = tokenRequest;
+    const userData = await (
+      await fetch("https://api.github.com/user", {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          // token?
+        },
+      })
+    ).json();
+    console.log(userData);
+    return res.end();
+  } else {
+    return res.redirect("/login");
+  }
 };
 export const remove = (req, res) => res.send("delete user");
 export const edit = (req, res) => res.send("edit user");
