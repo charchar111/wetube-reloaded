@@ -31,7 +31,39 @@ export const postJoin = async (req, res) => {
     return res.render("serverError"), { pageTitle: "error" };
   }
 };
+export const startGithubLogin = (req, res) => {
+  const baseUrl = "https://github.com/login/oauth/authorize";
+  const config = {
+    client_id: process.env.GH_CLIENT,
+    scope: "user:email read:user",
+    allow_signup: false,
+  };
+  const params = new URLSearchParams(config).toString();
+  const finalUrl = `${baseUrl}?${params}`;
 
+  return res.redirect(finalUrl);
+};
+
+export const finishGithubLogin = async (req, res) => {
+  const baseUrl = "https://github.com/login/oauth/access_token";
+  const config = {
+    client_id: process.env.GH_CLIENT,
+    client_secret: process.env.GH_SECRET,
+    code: req.query.code,
+  };
+  const params = new URLSearchParams(config).toString();
+  const finalUrl = `${baseUrl}?${params}`;
+  const data = await fetch(finalUrl, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+    },
+  });
+  //헤더는 리스폰스값을 json으로 받기 위한 설정값. 문서에 헤더설명은x 강의 참조//
+
+  const json = await data.json();
+  console.log(json);
+};
 export const remove = (req, res) => res.send("delete user");
 export const edit = (req, res) => res.send("edit user");
 export const getLogin = (req, res) =>
@@ -60,5 +92,6 @@ export const postLogin = async (req, res) => {
   // check if accont exist
   // check if password exist
 };
+
 export const logout = (req, res) => res.send("logout");
 export const see = (req, res) => res.send("see user");

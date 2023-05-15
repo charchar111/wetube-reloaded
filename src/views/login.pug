@@ -7,9 +7,12 @@ block content
 
         input(type="text" required name="username" placeholder="username")
         input(type="password" required name="password" placeholder="password")
-      
         input(type="submit" value="Login")
+        br
+        br
+        a(href="/users/github/start") Continue with Github &rarr;
+        //- a(href="https://github.com/login/oauth/authorize?client_id=057e5795248a4c333af4&allow_signup=false&scope=user:email%20read:user") Continue with Github &rarr;
     hr
     div    
         span Don't have an account?
-        a(href="/login") Create now &rarr;
+        a(href="/join") Create now &rarr;
