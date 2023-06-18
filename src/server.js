@@ -22,7 +22,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: process.env.DB_URL }),
-    cookie: { maxAge: 20000 },
+    cookie: {},
   })
 );
 // app.use((req, res, next) => {
@@ -41,6 +41,8 @@ app.use(localMiddleware);
 //   return res.send(`${req.session.id} \n ${req.session.potato}`);
 // });
 
+app.use("/uploads", express.static("uploads"));
+app.use("/static", express.static("assets"));
 app.use("/", rootRouter);
 app.use("/videos", videoRouter);
 app.use("/users", userRouter);

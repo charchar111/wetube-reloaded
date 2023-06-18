@@ -3,19 +3,23 @@ import bcrypt from "bcrypt";
 
 const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
+  avatarUrl: String,
+  socialOnly: { type: Boolean, required: true, default: false },
   username: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
+  password: { type: String },
   name: { type: String, required: true },
   location: { type: String },
+  videos: [
+    { type: mongoose.Schema.Types.ObjectId, required: true, ref: "video" },
+  ],
 });
 
 userSchema.pre("save", async function () {
-  console.log("raw password: " + this.password);
-  const saltRound = 5;
-  // // bcrypt.hash(this.password,saltRound,function(err,hash){})
-  // 콜백 방식
-  this.password = await bcrypt.hash(this.password, saltRound);
-  console.log("hash password: " + this.password);
+  if (this.isModified("password")) {
+    const saltRound = 5;
+    this.password = await bcrypt.hash(this.password, saltRound);
+    console.log("hash password: " + this.password);
+  }
 });
 
 userSchema.static(
@@ -26,6 +30,6 @@ userSchema.static(
   }
 );
 
-const User = mongoose.model("user", userSchema);
+const User = mongoose.model("User", userSchema);
 
 export default User;

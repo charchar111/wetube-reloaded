@@ -1,0 +1,16 @@
+extends ../base.pug
+include ../mixins/video.pug
+block content 
+    video(src=`/${video.fileUrl}` width="800px" controls loop=true) 
+
+    h3 #{video.views} #{video.views ===1 ? "view" : "views"}
+    +video(video)
+    h4=`Uploaded by ` 
+     a(href=`/users/${video.owner._id}`)  #{video.owner.username} 
+
+    if loggedInUser && (String(loggedInUser._id) === String(video.owner._id)) 
+        div 
+            a(href=`${video.id}/edit`) Edit Video ༼ つ ◕_◕ ༽つ
+        div 
+            a(href=`${video.id}/delete`) delete this Video (┬┬﹏┬┬)
+    

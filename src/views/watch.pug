@@ -1,9 +1,0 @@
-extends base.pug
-include ./mixins/video.pug
-block content 
-    h3 #{video.views} #{video.views ===1 ? "view" : "views"}
-    div 
-        a(href=`${video.id}/edit`) Edit Video ༼ つ ◕_◕ ༽つ
-    div 
-        a(href=`${video.id}/delete`) delete this Video (┬┬﹏┬┬)
-    +video(video)
