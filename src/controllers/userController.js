@@ -195,7 +195,7 @@ export const postEdit = async (req, res) => {
   await User.findByIdAndUpdate(
     _id,
     {
-      avatarUrl: file ? file.path : avatarUrl,
+      avatarUrl: file ? `/${file.path}` : avatarUrl,
       name,
       username,
       location,
@@ -210,7 +210,7 @@ export const postEdit = async (req, res) => {
     username,
     email,
     location,
-    avatarUrl: file ? file.path : avatarUrl,
+    avatarUrl: file ? `/${file.path}` : avatarUrl,
   };
   console.log("업데이트 완료 후, 컨트롤러에서의 세션 유저");
   console.log(req.session.user);
@@ -300,7 +300,14 @@ export const logout = (req, res) => {
 export const see = async (req, res) => {
   const { id } = req.params;
   try {
-    const user = await User.findById(id).populate("videos");
+    const user = await User.findById(id).populate({
+      path: "videos",
+      populate: { path: "owner", model: "User" },
+    });
+    // console.log("see \n\n");
+    // console.log(user);
+    // console.log("user populate");
+    // console.log(user.videos[0].owner);
     if (!user) {
       return res.status(404).render("serverError"), { pageTitle: "error" };
     }

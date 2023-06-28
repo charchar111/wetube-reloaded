@@ -3,8 +3,10 @@ import User from "../models/User";
 
 export const home = async (req, res) => {
   try {
-    const videos = await Video.find({}).sort({ createdAt: "desc" });
-    // console.log(videos);
+    const videos = await Video.find({})
+      .sort({ createdAt: "desc" })
+      .populate("owner");
+
     return res.render("video/home", { pageTitle: "home", videos });
   } catch (error) {
     console.log("server error: ", error);
@@ -95,7 +97,7 @@ export const search = async (req, res) => {
         $regex: new RegExp(keyword, "gim"),
         // $regex: new RegExp(`^${keyword}`, "gim"),
       },
-    });
+    }).populate("owner");
     console.log(videos);
   }
 

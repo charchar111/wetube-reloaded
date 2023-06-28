@@ -10,8 +10,15 @@ block content
         input(type="password" required name="password" placeholder="password")
         input(type="password" required name="password2" placeholder="confirm password")
         input(type="text" name="location" placeholder="location")
-        input(type="submit" value="Join")
-    hr
-    div    
-        span Are you have an account?
-        a(href="/login") Login now &rarr;
+        button.join__form-button Join
+
+    div.option-box1
+        div.row.row-last-child 
+            a(href="/login")
+                p Are you have an account?
+                    br 
+                    Login now &rarr;
+
+    //- div.join__change-password-box    
+    //-     p Are you have an account?
+    //-     a(href="/login") Login now &rarr;

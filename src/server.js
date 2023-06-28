@@ -22,7 +22,8 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: process.env.DB_URL }),
-    cookie: {},
+    cookie: { maxAge: 86400000 },
+    // 하루 24시간 유지
   })
 );
 // app.use((req, res, next) => {

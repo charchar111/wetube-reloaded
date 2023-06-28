@@ -1,10 +1,16 @@
 mixin video(video)
-       div 
-            h4
-                a(href=`/videos/${video.id}`) #{video.title}
-            p= video.description
-            each hashtag in video.hashtags 
-                li=hashtag
-            small=video.createdAt
-            
-            hr  
+    .video-mixin
+
+            a(href=`/videos/${video._id}`).video-mixin__thumb               
+            .video-mixin__info
+                    div
+                        a(href=`/videos/${video._id}`)
+                            h4.mixin-info__title #{video.title}
+                    div
+                        a(href=`/users/${video.owner._id}`)
+                            p.mixin-info__title= video.owner.username
+                    div.video-mixin__meta
+                        a(href=`/videos/${video._id}`)
+                            span=`조회수 ${video.meta.views} 회`
+                            span.spacing &#183;
+                            span=video.createdAt

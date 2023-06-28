@@ -1,0 +1,56 @@
+#videoContainer {
+  position: relative;
+}
+
+.watch-video-main {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+}
+
+h1.watch-title {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.watch-info {
+  display: flex;
+  justify-content: space-between;
+
+  .watch-info__column1 {
+    display: flex;
+
+    .watch-info__column1-1 {
+      width: 80px;
+      border-radius: 20px;
+      overflow: hidden;
+      img {
+        width: 100%;
+        object-fit: fill;
+      }
+    }
+  }
+}
+
+#videoControls {
+  display: flex;
+  // width: 90%;
+  position: absolute;
+  left: 0;
+  right: 0;
+
+  bottom: 0;
+  padding: 1rem 3rem;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+#currenTime-and-totalTime {
+  width: 100px;
+}
+
+div#watch {
+  button#play {
+    all: unset;
+    background-color: beige;
+  }
+}

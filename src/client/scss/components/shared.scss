@@ -1,0 +1,24 @@
+span.empty__message {
+  font-size: 2rem;
+}
+
+main {
+  max-width: 1080px;
+
+  font-size: 1.6rem;
+
+  word-wrap: break-word;
+  word-break: break-all;
+  .video-grid1 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 50px;
+  }
+}
+
+.blank-space-top {
+  height: 10rem;
+}
+.blank-space-bottom {
+  height: 20rem;
+}

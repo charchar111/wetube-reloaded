@@ -7,13 +7,21 @@ block content
 
         input(type="text" required name="username" placeholder="username")
         input(type="password" required name="password" placeholder="password")
-        input(type="submit" value="Login")
-        br
-        br
-        a(href="/users/github/start") Continue with Github &rarr;
-        a(href="/users/kakaotalk/start") Continue with Kakaotalk &rarr;
+        button.join__form-button Join
+
+
+    div.option-box1
+        div.row
+            a(href="/users/github/start")
+                p  Continue with Github &rarr;
+            a(href="/users/kakaotalk/start")
+                p Continue with Kakaotalk &rarr;
         //- a(href="https://github.com/login/oauth/authorize?client_id=057e5795248a4c333af4&allow_signup=false&scope=user:email%20read:user") Continue with Github &rarr;
-    hr
-    div    
-        span Don't have an account?
-        a(href="/join") Create now &rarr;
+
+   
+
+        div.row.row-last-child
+            a(href="/join") 
+                p Don't have an account?
+                    br 
+                    span Create now &rarr;

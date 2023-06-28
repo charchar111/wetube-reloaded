@@ -1,0 +1,37 @@
+header
+    nav.header-nav1
+        div.header-title
+            h1 #{pageTitle} 
+            p 
+                a(href="/")
+                    i.fab.fa-youtube 
+            span.header-title__language KR
+    nav.header-nav2
+        ul 
+
+
+
+            if loggedIn
+                li 
+                    a(href="/videos/upload") Upload Video
+
+                li
+                    a(href=`/users/${loggedInUser._id}`)
+                        if !loggedInUser.avatarUrl
+                            span ❤
+                        else
+                            img(src=loggedInUser.avatarUrl, alt="").header-nav2__avatar
+                li
+                    a(href="/users/edit-profile") Edit-profile
+
+                li
+                    a(href="/users/logout") Log out
+
+            else 
+                li
+                    a(href="/join") Join
+                li
+                    a(href="/login") Login
+
+            li 
+                a(href="/search") Search

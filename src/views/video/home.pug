@@ -3,8 +3,10 @@ include ../mixins/video
 
 
 block content
+      .video-grid1
+        each video in videos
+          +video(video)
 
-    each video in videos
-      +video(video) 
-    else
-       li sorry nothing found
+          
+        else
+          span.empty__message No video's found.
