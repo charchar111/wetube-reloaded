@@ -2,7 +2,7 @@ extends ../base.pug
 include ../mixins/video.pug
 block content
     div#watch
-    div#videoContainer
+    div#videoContainer(data-video-id=video._id)
         video(src=`/${video.fileUrl}` width="800px"  ).watch-video-main 
         div#videoControls
             button#play 

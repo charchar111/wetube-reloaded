@@ -176,6 +176,11 @@ const changeInnerText = (target, condition, trueInnerText, falseInnerText) => {
   return target.innerText;
 };
 
+const handleEnded = (event) => {
+  const id = videoContainer.dataset.videoId;
+  fetch(`/api/videos/${id}/view`, { method: "POST" });
+};
+
 playBtn.addEventListener("click", handlePlay);
 muteBtn.addEventListener("click", handleMute);
 // video.addEventListener("pause", handlePause);
@@ -186,6 +191,7 @@ volumeRange.addEventListener("input", handleVolumeChange);
 
 video.addEventListener("loadedmetadata", handleLodedMetadata);
 video.addEventListener("timeupdate", handleTimeUPdate);
+video.addEventListener("ended", handleEnded);
 
 timeline.addEventListener("input", handleTimelineChange);
 fullScreenBtn.addEventListener("click", handleFullScreen);
