@@ -4,8 +4,12 @@
     display: inline-block;
     width: 100%;
     height: 120px;
-    background-color: rgb(230, 228, 225);
+
     border-radius: $border-radious;
+
+    img {
+      width: 100%;
+    }
   }
   .video-mixin__info {
     margin-top: 10px;

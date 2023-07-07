@@ -1,6 +1,7 @@
 import express from "express";
 import morgan from "morgan";
 import session from "express-session";
+import flash from "express-flash";
 import MongoStore from "connect-mongo";
 import { localMiddleware } from "./middlewares";
 import rootRouter from "./routers/rootRouter";
@@ -35,6 +36,7 @@ app.use(
 //     next();
 //   });
 // });
+app.use(flash());
 app.use(localMiddleware);
 // app.get("/add-one", (req, res, next) => {
 //   console.log("add-one");
@@ -42,6 +44,11 @@ app.use(localMiddleware);
 //   console.log(req.session);
 //   return res.send(`${req.session.id} \n ${req.session.potato}`);
 // });
+app.use((req, res, next) => {
+  res.header("Cross-Origin-Embedder-Policy", "require-corp");
+  res.header("Cross-Origin-Opener-Policy", "same-origin");
+  next();
+});
 
 app.use("/uploads", express.static("uploads"));
 app.use("/static", express.static("assets"));

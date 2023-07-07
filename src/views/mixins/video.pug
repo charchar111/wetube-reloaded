@@ -1,7 +1,8 @@
 mixin video(video)
     .video-mixin
 
-            a(href=`/videos/${video._id}`).video-mixin__thumb               
+            a(href=`/videos/${video._id}`)
+                img(src=`/${video.thumbUrl}`, alt="").video-mixin__thumb               
             .video-mixin__info
                     div
                         a(href=`/videos/${video._id}`)

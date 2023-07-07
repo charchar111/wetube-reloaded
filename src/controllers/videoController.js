@@ -84,6 +84,7 @@ export const postEdit = async (req, res) => {
       console.log("비정상적 접근 시도");
       return res.redirect("/");
     }
+    req.flash("success", "video edit success!");
     res.redirect(`/videos/${id}`);
   }
 };
@@ -105,7 +106,7 @@ export const search = async (req, res) => {
 };
 export const deleteVideo = async (req, res) => {
   const { id } = req.params;
-
+  const error = "비정상적 삭제 권한 접근 시도";
   // console.log(id);
   // const video = await Video.findById(id);
   let video;
@@ -120,7 +121,12 @@ export const deleteVideo = async (req, res) => {
     console.log("server error: ", error);
     return res.status(404).render("serverError", { pageTitle: "error" });
   }
+  if (!req.session.user) {
+    console.log("server error: ", error);
+    return res.status(404).render("serverError", { pageTitle: "error" });
+  }
   if (String(video.owner) !== String(req.session.user._id)) {
+    req.flash("error", "you are not the owner of the video");
     console.log("비정상적 접근 시도");
     return res.redirect("/");
   }
@@ -142,7 +148,8 @@ export const getUpload = (req, res) => {
 
 export const postUpload = async (req, res) => {
   // here we will add a video to the video array
-  const { path: fileUrl } = req.file;
+  console.log(req.files);
+  const { video, thumb } = req.files;
 
   const { title, description, hashtags } = req.body;
   const {
@@ -155,7 +162,8 @@ export const postUpload = async (req, res) => {
     const newVideo = await Video.create({
       title,
       description,
-      fileUrl,
+      fileUrl: video[0].path,
+      thumbUrl: thumb[0].path,
       hashtags: Video.formatHashtags(hashtags),
       owner: _id,
       // hashtags: hashtags.split(",").map((word) => `#${word.trim()}`),

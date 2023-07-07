@@ -221,6 +221,7 @@ export const postEdit = async (req, res) => {
 export const getChangePassword = (req, res) => {
   if (req.session.user.socialOnly === true) {
     console.log("sns 유저는 비밀번호 변경 불가");
+    req.flash("info", "sns user can't change password");
     return res.redirect("/");
   }
   return res.render("user/change-password", { pageTitle: "change Password" });
@@ -260,6 +261,7 @@ export const postChangePassword = async (req, res) => {
   user.password = newPassword;
 
   await user.save();
+  req.flash("info", "Password updated");
   req.session.user.password = user.password;
   return res.redirect("/users/logout");
 };
@@ -294,7 +296,11 @@ export const postLogin = async (req, res) => {
 
 export const logout = (req, res) => {
   console.log("로그아웃");
-  req.session.destroy();
+
+  req.session.user = null;
+  req.session.loggedIn = false;
+  req.flash("info", "Bye Bye");
+
   return res.redirect("/");
 };
 export const see = async (req, res) => {
@@ -304,16 +310,11 @@ export const see = async (req, res) => {
       path: "videos",
       populate: { path: "owner", model: "User" },
     });
-    // console.log("see \n\n");
-    // console.log(user);
-    // console.log("user populate");
-    // console.log(user.videos[0].owner);
+
     if (!user) {
       return res.status(404).render("serverError"), { pageTitle: "error" };
     }
-    // const videos = await Video.find({ owner: user._id });
-    console.log("see");
-    console.log(user);
+
     return res.render("user/profile", {
       pageTitle: `${user.username}`,
       user,

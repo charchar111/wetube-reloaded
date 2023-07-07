@@ -22,12 +22,13 @@ import {
 const userRouter = express.Router();
 
 userRouter.get("/logout", protectorMiddleware, logout);
+
 userRouter
   .route("/edit-profile")
   .all(protectorMiddleware)
-
   .get(getEdit)
   .post(avatarUpload.single("avatar"), postEdit);
+
 userRouter
   .route("/change-password")
   .all(protectorMiddleware)
