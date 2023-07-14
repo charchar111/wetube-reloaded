@@ -7,6 +7,7 @@ import "./db";
 
 import "./models/Video";
 import "./models/User";
+import "./models/comment";
 import app from "./server";
 
 console.log("init");

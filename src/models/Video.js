@@ -18,6 +18,7 @@ const videoSchema = new mongoose.Schema({
   fileUrl: { type: String, required: true },
   thumbUrl: { type: String, required: true },
   owner: { type: mongoose.Types.ObjectId, required: true, ref: "User" },
+  comments: [{ type: mongoose.Types.ObjectId, required: true, ref: "Comment" }],
 });
 
 // videoSchema.pre("save", async function () {

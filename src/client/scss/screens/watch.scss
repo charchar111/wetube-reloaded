@@ -54,3 +54,76 @@ div#watch {
     background-color: beige;
   }
 }
+
+.video__comments {
+  display: flex;
+  flex-direction: column;
+  max-width: 320px;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 30px;
+
+  .video-comment {
+    .video-comment__text {
+      white-space: pre-wrap;
+      // white-space: pre;
+    }
+    background-color: whitesmoke;
+
+    color: black;
+    margin-bottom: 10px;
+    font-size: 1.4rem;
+    border-radius: 20px;
+    padding: 5px 10px;
+
+    span {
+      margin: 0 10px 0 10px;
+    }
+    i {
+      margin: 0px 5px;
+    }
+    i.fas.fa-pen,
+    i.fas.fa-xmark {
+      cursor: pointer;
+    }
+    form.reply-add {
+      margin-top: 20px;
+    }
+    .reply-add-btn {
+      cursor: pointer;
+      padding: 2px 7px;
+      padding-bottom: 5px;
+      border-radius: 20px;
+      transition: all 0.1s ease-in-out;
+
+      &:hover {
+        background-color: rgb(225, 225, 225);
+      }
+      &:active {
+        filter: brightness(1.05);
+      }
+    }
+    .reply-view-btn {
+      width: fit-content;
+      cursor: pointer;
+      padding: 2px 7px;
+      padding-bottom: 5px;
+      border-radius: 20px;
+      transition: all 0.1s ease-in-out;
+
+      &:hover {
+        background-color: rgb(225, 225, 225);
+      }
+      &:active {
+        filter: brightness(1.05);
+      }
+    }
+
+    .reply-column {
+      margin-top: 10px;
+      background-color: rgb(195, 195, 195);
+      padding: 5px 10px;
+      border-radius: 20px;
+    }
+  }
+}

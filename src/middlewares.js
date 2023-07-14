@@ -13,7 +13,7 @@ export const protectorMiddleware = (req, res, next) => {
   console.log(req.session);
   if (!req.session.loggedIn) {
     console.log("your not login :protectorMiddleware ");
-    req.flash("error", "Not Authorized:protectorMiddleware");
+    req.flash("error", "please login first");
     res.redirect("/");
   } else {
     next();
@@ -39,3 +39,15 @@ export const videoUpload = multer({
   dest: "uploads/videos",
   limits: { fileSize: 10000000 },
 });
+
+// api용 로그인 확인 미들웨어, 로그인 x => home으로 리다이렉트 요청함
+export const apiProtectorMiddleware = (req, res, next) => {
+  if (!req.session.loggedIn) {
+    console.log("your not login :apiProtectorMiddleware ");
+    req.flash("error", "please login first");
+
+    return res.sendStatus(303);
+  } else {
+    next();
+  }
+};

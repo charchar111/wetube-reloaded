@@ -1,5 +1,8 @@
 extends ../base.pug
 include ../mixins/video.pug
+
+
+
 block content
     div#watch
     div#videoContainer(data-video-id=video._id)
@@ -67,5 +70,65 @@ block content
             div 
                 a(href=`${video.id}/delete`) delete this Video (┬┬﹏┬┬)
 
+    if loggedIn
+        .video__comments-add  
+            form.video__comment-form#commentForm
+                textarea(placeholder="add comment" cols="30" rows="10" )
+                button comment
+    .video__comments
+        ul  
+            //- each comment in video.comments.reverse()
+            
+            each comment in video.comments
+                //- if 댓글의 본인 여부 확인 
+
+                li.video-comment.max-height(data-comment-id=comment._id) 
+                    i.fas.fa-comment 
+                    span.video-comment__text #{comment.text}
+                    if loggedInUser._id ==comment.owner._id.toString()
+                        i.fas.fa-pen                    
+                        i.fas.fa-xmark               
+                    div.video-comment__option
+                        if comment.meta.like.users.includes(loggedInUser._id)
+                            span.like.button
+                                i.fa-solid.fa-thumbs-up
+                                span.like-button__count=comment.meta.like.count
+                                //- <i class="fa-solid fa-thumbs-up"></i>
+                            span.unlike.button
+                                i.fa-regular.fa-thumbs-down
+                                //- <i class="fa-solid fa-thumbs-down"></i>
+                        else 
+                            span.like.button
+                                i.fa-regular.fa-thumbs-up
+                                span.like-button__count=comment.meta.like.count
+                                //- <i class="fa-solid fa-thumbs-up"></i>
+                            span.unlike.button
+                                i.fa-regular.fa-thumbs-down
+                                //- <i class="fa-solid fa-thumbs-down"></i>
+
+
+                        span.reply-add-btn reply
+                    if comment.reply.group.length >0
+                        .reply-container 
+                            .reply-view-btn
+                                i.fa-solid.fa-arrow-down 
+                                span view reply
+                            //- .reply-section
+
+
+
+                    //- form.reply-add(action="")
+                    //-     input(type="text" name="reply")
+                    //-     button.reply-add__cancel cancel 
+                    //-     button.reply-add__reply reply
+                            
+
+                    //- form.video-comment__input(data-comment-edit="form") 
+                    //-     input(type="text" data-comment-edit="input-text") 
+                    //-     button 
+
+
+
 block script 
-    script(src="/static/js/videoPlayer.js") 
+    script(src="/static/js/videoPlayer.js")
+    script(src="/static/js/commentSection.js") 
