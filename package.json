@@ -7,9 +7,12 @@
     "url": "git+https://github.com/charchar111/wetube-reloaded.git"
   },
   "scripts": {
-    "build:server": "babel src -d build",
+    "start": "node build/init.js",
+    "build": "npm run build:server && npm run build:assets",
+    "build:assets": "webpack --config webpack.config.js --mode=production",
+    "build:server": "babel src -d build --ignore 'src/client'",
     "dev:server": "nodemon",
-    "dev:assets": "webpack --config webpack.config.js"
+    "dev:assets": "webpack --config webpack.config.js --mode=development -w"
   },
   "author": "charchar",
   "license": "MIT",
