@@ -11,7 +11,8 @@ import "./models/comment";
 import app from "./server";
 
 console.log("init");
-const PORT = 3000;
+// const PORT = 3000;
+const PORT = process.env.REDIS_MASTER_PORT || 4000;
 const handleListening = () =>
   console.log(`server listening on port http://localhost: ${PORT}`);
 
